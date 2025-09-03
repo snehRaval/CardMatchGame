@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8481d3f3606e4e0797b7ab86acfd9ab, type: 3}
+  m_Name: FruitsSpriteList
+  m_EditorClassIdentifier: 
+  cardSpriites:
+  - {fileID: 21300000, guid: 2481436ea81664898888dabb24f5019b, type: 3}
+  - {fileID: 21300000, guid: 71a0b0334955b4fb6976b4d35fe3f154, type: 3}
+  - {fileID: 21300000, guid: 1e24604c245b149c1bbf4cfb6f4380fc, type: 3}
+  - {fileID: 21300000, guid: f3f7ed43d59ad44bdaa7b09f48cb46f9, type: 3}
+  - {fileID: 21300000, guid: 7e347d8a4d9834b5c81f7415aa9e54cb, type: 3}
+  - {fileID: 21300000, guid: aadeeaca486b1439e8f9e6ff0c54fce3, type: 3}
+  backSprite: {fileID: 21300000, guid: 92a13b9eacdaf42f8811d7a514930d71, type: 3}

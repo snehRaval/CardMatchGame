@@ -1,17 +1,19 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CardMatching.UI
+namespace CyberSpeed.CardsMatchGame
 {
-    public class MainMenuUIHandler : MonoBehaviour
+    public class MainMenuUIHandler : UIScreenBase
     {
         [SerializeField] Button playButton;
         [SerializeField] TMP_Dropdown gameLayoutDropDown;
         [SerializeField] GameLayoutScriptableObject gameLayoutSOAsset;
-
         private int rows, columns;
+        
         private void Awake()
         {
             PopulateGameLayoutDropdown();
@@ -43,13 +45,13 @@ namespace CardMatching.UI
 
             gameLayoutDropDown.value = 0;
             gameLayoutDropDown.RefreshShownValue();
+            OnDropdownValueChange(0);
         }
         
         public void OnDropdownValueChange(int value)
         {
-            Debug.Log($"OnDropdownValueChange {value}");
             ( rows,  columns) = GetRowColumns(gameLayoutDropDown.options[gameLayoutDropDown.value].text);
-            Debug.Log($"OnDropdownValueChange: rows {rows} columns {columns}");
+            Debug.Log($"OnDropdownValueChange: rows {rows} columns {columns} for value {value}");
         }
 
         private (int, int) GetRowColumns(string input)
@@ -62,9 +64,10 @@ namespace CardMatching.UI
         }
         
         private void OnPlayButtonClick()
-        {
-            gameObject.SetActive(false);
-            //Initialise grid of rows and columns
+        {   
+            GameManager.Instance.StartGame(rows, columns);
+            gameObject.SetActive(false); 
+            //TODO: Hide();
         }
     }
 }
