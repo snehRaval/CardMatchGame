@@ -591,6 +591,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1993720757}
   - component: {fileID: 1993720758}
+  - component: {fileID: 1993720759}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -628,6 +629,18 @@ MonoBehaviour:
   mainMenuUIHandler: {fileID: 216952447}
   gamePlayUIHandler: {fileID: 746003719}
   gameEndUIHandler: {fileID: 746003719}
+--- !u!114 &1993720759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993720755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e63f1039a33b44c819aabcdc0341b819, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2918687683782906718
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -638,6 +651,10 @@ PrefabInstance:
     - target: {fileID: 2918687684254174814, guid: 2e361329d681a4bcf91718d136f0b9ea, type: 3}
       propertyPath: m_Name
       value: Canvas_Gameplay
+      objectReference: {fileID: 0}
+    - target: {fileID: 2918687684254174814, guid: 2e361329d681a4bcf91718d136f0b9ea, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2918687684254174815, guid: 2e361329d681a4bcf91718d136f0b9ea, type: 3}
       propertyPath: m_Pivot.x
