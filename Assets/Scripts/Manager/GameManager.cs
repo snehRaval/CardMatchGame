@@ -59,6 +59,8 @@ namespace CyberSpeed.CardsMatchGame
         public void GameOver()
         {
             Debug.Log("Game Over!");
+            gamePlayUIHandler.gameObject.SetActive(false);
+            gameEndUIHandler.gameObject.SetActive(false);
             OnGameOver?.Invoke();
         }
 
