@@ -14,7 +14,7 @@ public class GameLayoutScriptableObject : ScriptableObject
 
         public override string ToString()
         {
-            return $"{rows}x{cols}";
+            return $"{rows} x {cols}";
         }
     }
     
