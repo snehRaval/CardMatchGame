@@ -79,6 +79,7 @@ namespace CyberSpeed.CardsMatchGame
             if (IsMatched || IsFaceDown == false || IsAnimating)
                 return;
             Clicked?.Invoke(this);
+            AudioManager.Instance.PlayCardFlip();
         }
 
         public void ShowCardBack()

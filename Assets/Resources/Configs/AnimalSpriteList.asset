@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8481d3f3606e4e0797b7ab86acfd9ab, type: 3}
+  m_Name: AnimalSpriteList
+  m_EditorClassIdentifier: 
+  cardSpriites:
+  - {fileID: 21300000, guid: ac5a4049c1e8047aab45d8853ffac7e0, type: 3}
+  - {fileID: 21300000, guid: c117353da18e9474a9450d4a5017788a, type: 3}
+  - {fileID: 21300000, guid: 7eb1ff60f9b9b4ef081994e12ee25fdf, type: 3}
+  - {fileID: 21300000, guid: e6f5bb7419ea94491845f730be932b21, type: 3}
+  - {fileID: 21300000, guid: a3fa6d6a81a9346f5a18cbd973b6c3cd, type: 3}
+  - {fileID: 21300000, guid: 93c5040712d9848b8b71bbd4872fbd26, type: 3}
+  - {fileID: 21300000, guid: fd94b1a6c8a524f9d887556b06de0e83, type: 3}
+  - {fileID: 21300000, guid: 8698f06b9ad2b4d3b85aa517abef775b, type: 3}
+  - {fileID: 21300000, guid: 7c006812392b842438d931ad88bc9e32, type: 3}
+  - {fileID: 21300000, guid: 54fefd985164c469fae264b9b22bd425, type: 3}
+  - {fileID: 21300000, guid: 797eb8694090c42fe93a5f021289b828, type: 3}
+  - {fileID: 21300000, guid: cdfc0610f157f4fa883538ec2226706a, type: 3}
+  - {fileID: 21300000, guid: 9467f39c66f554e6fb5241cecb625926, type: 3}
+  - {fileID: 21300000, guid: f2e1e8e10527b4d4aa7b5aa21311f826, type: 3}
+  - {fileID: 21300000, guid: 087900ec41b1f4d609fae89b234790ba, type: 3}
+  - {fileID: 21300000, guid: 4cfda3ee7729842b8bb90fb5c7b49208, type: 3}
+  backSprite: {fileID: 21300000, guid: 5eb64c1280fd24da7928d943332a5312, type: 3}

@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,11 +10,13 @@ namespace CyberSpeed.CardsMatchGame
         [SerializeField] Button playButton;
         [SerializeField] TMP_Dropdown gameLayoutDropDown;
         [SerializeField] GameLayoutScriptableObject gameLayoutSOAsset;
+        [SerializeField] SaveGameConfirmationPopup saveGameConfirmationPopup;
         private int rows, columns;
         
         private void Awake()
         {
             PopulateGameLayoutDropdown();
+            Debug.Log(Application.persistentDataPath );
         }
         
         private void OnEnable()
@@ -52,6 +52,8 @@ namespace CyberSpeed.CardsMatchGame
         {
             ( rows,  columns) = GetRowColumns(gameLayoutDropDown.options[gameLayoutDropDown.value].text);
             Debug.Log($"OnDropdownValueChange: rows {rows} columns {columns} for value {value}");
+            
+           
         }
 
         private (int, int) GetRowColumns(string input)
@@ -65,9 +67,16 @@ namespace CyberSpeed.CardsMatchGame
         
         private void OnPlayButtonClick()
         {   
-            GameManager.Instance.StartGame(rows, columns);
-            gameObject.SetActive(false); 
-            //TODO: Hide();
+            string key = $"{rows}x{columns}";
+            if (SaveLoadManager.HasSave(key))
+            {
+                saveGameConfirmationPopup.Init(rows, columns);
+            }
+            else
+            {
+                GameManager.Instance.StartGame(rows, columns);
+            }
+            
         }
     }
 }

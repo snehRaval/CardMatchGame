@@ -1,17 +1,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace CyberSpeed.CardsMatchGame
 {
     public class CardManager : MonoBehaviour
     {
-        [SerializeField] private GameObject cardPrefab;
-        [SerializeField] private FruitsSpritesScriptable fruitsSpritesSO;
+        [SerializeField] public AnimalSpritesScriptable animalSpritesSo;
         [SerializeField] private GridLayoutGroup gridObject;
         [SerializeField] private MatchController matchController;
+        [SerializeField] private GameObject cardPrefab;
 
         private int totalPairs;
+        private ObjectPool objectPool;
+
+        private void Awake()
+        {
+            objectPool = gridObject.gameObject.AddComponent<ObjectPool>();
+            objectPool.InitializePool(cardPrefab);
+        }
+        
+        public void ReleaseAllCards()
+        {
+            if (objectPool != null)
+            {
+                objectPool.ReleaseAll();
+            }
+        }
 
         //  private CardUI[,] cardGrid;
         public void CreateCardGrid(int rows, int cols)
@@ -28,7 +44,6 @@ namespace CyberSpeed.CardsMatchGame
             {
                 cardValues.Add(i);
                 cardValues.Add(i);
-                Debug.Log($"CreateCardGrid: Adding cardValues {i} ");
             }
 
             // Shuffle card values
@@ -41,10 +56,9 @@ namespace CyberSpeed.CardsMatchGame
             }
 
             // Validate sprite capacity
-            if (totalPairs > fruitsSpritesSO.Count)
+            if (totalPairs > animalSpritesSo.Count)
             {
-                Debug.LogError(
-                    $"Not enough sprites. Needed pairs: {totalPairs}, available unique sprites: {fruitsSpritesSO.Count}");
+                Debug.LogError($"Not enough sprites. Needed pairs: {totalPairs}, available unique sprites: {animalSpritesSo.Count}");
                 return;
             }
 
@@ -54,10 +68,17 @@ namespace CyberSpeed.CardsMatchGame
             {
                 for (int x = 0; x < rows; x++)
                 {
-                    GameObject cardObj = Instantiate(cardPrefab, gridObject.transform);
+                    GameObject cardObj = objectPool.GetObjectFromPool();
+                    if (cardObj == null)
+                    {
+                        Debug.LogError("Failed to get card object from pool. Pool may not be initialized properly.");
+                        return;
+                    }
+                    
+                    cardObj.SetActive(true);
                     CardUI card = cardObj.GetComponent<CardUI>();
                     //Debug.Log($"CreateCardGrid: Initialize cardValues {cardValues[cardIndex]} cardIndex : {cardIndex}");
-                    card.Initialize(cardValues[cardIndex], fruitsSpritesSO.GetSprite(cardValues[cardIndex]));
+                    card.Initialize(cardValues[cardIndex], animalSpritesSo.GetSprite(cardValues[cardIndex]));
                     //       cardGrid[x, y] = card;
                     if (matchController != null)
                     {

@@ -130,6 +130,12 @@ namespace CyberSpeed.CardsMatchGame
             }
         }
 
+        public void SetMatchedPairs(int count)
+        {
+            matchedPairs = count;
+            CheckForGameOver();
+        }
+        
         public void RunInitialReveal()
         {
             if (!gameObject.activeInHierarchy)

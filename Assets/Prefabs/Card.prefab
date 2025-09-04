@@ -89,7 +89,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 7817746023321977984}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -107,6 +107,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imgFrontCard: {fileID: 2770611067111321643}
   imgBackCard: {fileID: 7817746023321977984}
+  onClickCard: {fileID: 0}
+  flipDuration: 0.25
+  flipEase:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &7817746023321977984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,7 +153,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 92a13b9eacdaf42f8811d7a514930d71, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5eb64c1280fd24da7928d943332a5312, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

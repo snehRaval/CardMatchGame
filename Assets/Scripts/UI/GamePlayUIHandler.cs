@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CyberSpeed.CardsMatchGame
 {
@@ -11,6 +12,9 @@ namespace CyberSpeed.CardsMatchGame
 
         [SerializeField] private CardManager cardManager;
         [SerializeField] private TextMeshProUGUI turnText,matchesText,scoreText,comboText;
+      
+        [SerializeField] Button homeButton;
+        [SerializeField] ExitPopupUI gameEndPopup;
         private void OnEnable()
         {
             GameManager.Instance.OnGameStarted += SpawnGrid;
@@ -20,6 +24,9 @@ namespace CyberSpeed.CardsMatchGame
                 ScoreManager.Instance.MatchStatsChanged += OnMatchStatsChanged; 
                 ScoreManager.Instance.ComboChanged += OnComboChanged;
             }
+            
+            homeButton.onClick.AddListener(OnHomeClick);
+            gameEndPopup.Show(false);
         }
         
         private void OnDisable()
@@ -31,12 +38,15 @@ namespace CyberSpeed.CardsMatchGame
                 ScoreManager.Instance.MatchStatsChanged -= OnMatchStatsChanged;
                 ScoreManager.Instance.ComboChanged -= OnComboChanged;
             }
+            
+            homeButton.onClick.RemoveListener(OnHomeClick);
         }
         
         private void SpawnGrid(int rows, int cols)
         {
             Debug.Log($"Spawning {rows}x{cols} board...");
             cardManager.CreateCardGrid(rows, cols);
+
             turnText.text = "Turn: 0";
             matchesText.text = "Matches: 0";
             scoreText.text = "Score: 0";
@@ -58,6 +68,11 @@ namespace CyberSpeed.CardsMatchGame
         private void OnComboChanged(int combo)
         {
             comboText.text = $"Combo: {combo}";
+        }
+        
+        private void OnHomeClick()
+        {
+            gameEndPopup.Show(true);
         }
     }
 }
