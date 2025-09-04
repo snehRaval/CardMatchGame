@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,9 +17,7 @@ namespace CyberSpeed.CardsMatchGame
             GameManager.Instance.OnGameStarted += SpawnGrid;
             if (ScoreManager.Instance != null)
             {
-                ScoreManager.Instance.TurnChanged += OnTurnChanged;
-                ScoreManager.Instance.MatchStatsChanged += OnMatchStatsChanged; 
-                ScoreManager.Instance.ComboChanged += OnComboChanged;
+                ScoreManager.Instance.OnScoreUpdate += OnScoreUpdate;
             }
             
             homeButton.onClick.AddListener(OnHomeClick);
@@ -34,9 +29,7 @@ namespace CyberSpeed.CardsMatchGame
             GameManager.Instance.OnGameStarted -= SpawnGrid;
             if (ScoreManager.Instance != null)
             {
-                ScoreManager.Instance.TurnChanged -= OnTurnChanged;
-                ScoreManager.Instance.MatchStatsChanged -= OnMatchStatsChanged;
-                ScoreManager.Instance.ComboChanged -= OnComboChanged;
+                ScoreManager.Instance.OnScoreUpdate -= OnScoreUpdate;
             }
             
             homeButton.onClick.RemoveListener(OnHomeClick);
@@ -53,23 +46,14 @@ namespace CyberSpeed.CardsMatchGame
             comboText.text = "Combo: 0";
         }
 
-        private void OnTurnChanged(int turns)
+        private void OnScoreUpdate(IScoreData scoreData)
         {
-            turnText.text = $"Turn: {turns}";
+            turnText.text = $"Turn: {scoreData.Turns}";
+            matchesText.text = $"Matches: {scoreData.Matches}";
+            scoreText.text = $"Score: {scoreData.Score}";
+            comboText.text = $"Combo: {scoreData.Combo}";
         }
 
-        private void OnMatchStatsChanged(int matches, int score, int combo)
-        {
-            matchesText.text = $"Matches: {matches}";
-            scoreText.text = $"Score: {score}";
-            comboText.text = $"Combo: {combo}";
-        }
-        
-        private void OnComboChanged(int combo)
-        {
-            comboText.text = $"Combo: {combo}";
-        }
-        
         private void OnHomeClick()
         {
             gameEndPopup.Show(true);

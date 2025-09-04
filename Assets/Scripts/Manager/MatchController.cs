@@ -122,11 +122,14 @@ namespace CyberSpeed.CardsMatchGame
             secondSelection = null;
         }
 
-        private void CheckForGameOver()
+        private async void CheckForGameOver()
         {
             if (matchedPairs >= totalPairs)
             {
-                GameManager.Instance.GameOver();
+                await UtilsAsync.Delay(500, () => {
+                    GameManager.Instance.GameOver();
+                });
+               
             }
         }
 

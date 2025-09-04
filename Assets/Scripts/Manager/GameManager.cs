@@ -4,18 +4,18 @@ using UnityEngine;
 
 namespace CyberSpeed.CardsMatchGame
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : MonoBehaviour, IGameEvents
     {
         [field: Header("Game Settings")]
         public int rows { get; private set; }
         public int cols { get; private set; }
         public static GameManager Instance { get; private set; }
        
-        public Action<int, int> OnGameStarted;   // rows, cols
-        public Action<IScoreData> OnGameOver;
-        public Action OnGamePaused;
-        public Action OnGameResumed;
-        public Action OnGameSave;
+        public event Action<int, int> OnGameStarted;   // rows, cols
+        public event Action<IScoreData> OnGameOver;
+        public event Action OnGamePaused;
+        public event Action OnGameResumed;
+        public event Action OnGameSave;
         
 
         [SerializeField] private UIScreenBase mainMenuUIHandler, gamePlayUIHandler, gameEndUIHandler;
@@ -53,7 +53,9 @@ namespace CyberSpeed.CardsMatchGame
             cols = colCount;
             mainMenuUIHandler.gameObject.SetActive(false);
             gamePlayUIHandler.gameObject.SetActive(true);
+            ScoreManager.Instance.ResetAll();
             OnGameStarted?.Invoke(rows, cols);
+            
         }
         
         public void ReStartGame()

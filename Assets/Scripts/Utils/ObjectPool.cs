@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CyberSpeed.CardsMatchGame
 {
-    public class ObjectPool : MonoBehaviour
+    public class ObjectPool : MonoBehaviour, IObjectPool
     {
         public bool mWillGrowPool = true;
 

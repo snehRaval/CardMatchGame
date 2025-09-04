@@ -3,14 +3,6 @@ using UnityEngine;
 
 namespace CyberSpeed.CardsMatchGame
 {
-    public interface IScoreData
-    {
-        int Turns { get; }
-        int Matches { get; }
-        int Combo { get; }
-        int Score { get; }
-    }
-    
     public class ScoreManager :  MonoBehaviour, IScoreData
     {
         public static ScoreManager Instance { get; private set; }
@@ -21,10 +13,7 @@ namespace CyberSpeed.CardsMatchGame
         public int Matches { get; private set; }
         public int Combo { get; private set; }
         public int Score { get; private set; }
-
-        public event Action<int> TurnChanged; // turns
-        public event Action<int, int, int> MatchStatsChanged; // matches, score
-        public event Action<int> ComboChanged; //combo
+        public event Action<IScoreData> OnScoreUpdate; //combo
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -36,19 +25,21 @@ namespace CyberSpeed.CardsMatchGame
             DontDestroyOnLoad(gameObject);
             ResetAll();
         }
-
+        
         public void ResetAll()
         {
             Turns = 0;
             Matches = 0;
             Combo = 0;
             Score = 0;
+            Matches = 0;
+            baseScorePerMatch = 0;
         }
 
         public void IncrementTurn()
         {
             Turns++;
-            TurnChanged?.Invoke(Turns);
+            OnScoreUpdate?.Invoke(this);
         }
 
         public void OnMatch()
@@ -58,7 +49,7 @@ namespace CyberSpeed.CardsMatchGame
             // increase combo each successful continuous match
             Combo = Mathf.Max(0, Combo + 1);
             Score += baseScorePerMatch * Combo;
-            MatchStatsChanged?.Invoke(Matches, Score,Combo);
+            OnScoreUpdate?.Invoke(this);
             AudioManager.Instance.PlayMatchFound();
         }
 
@@ -67,7 +58,7 @@ namespace CyberSpeed.CardsMatchGame
             // break streak; set combo back to 1
             Combo = 0;
             baseScorePerMatch = 1;
-            ComboChanged?.Invoke(Combo);
+            OnScoreUpdate?.Invoke(this);
             AudioManager.Instance.PlayMismatch();
         }
         
@@ -77,10 +68,7 @@ namespace CyberSpeed.CardsMatchGame
             Matches = matches;
             Combo = combo;
             Score = score;
-
-            TurnChanged?.Invoke(Turns);
-            MatchStatsChanged?.Invoke(Matches, Score, Combo);
-            ComboChanged?.Invoke(Combo);
+            OnScoreUpdate?.Invoke(this);
         }
     }
 }
