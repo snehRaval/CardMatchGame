@@ -11,7 +11,7 @@ public class GameLayoutScriptableObject : ScriptableObject
     {
         public int rows;
         public int cols;
-
+        public float cellSize;
         public override string ToString()
         {
             return $"{rows} x {cols}";

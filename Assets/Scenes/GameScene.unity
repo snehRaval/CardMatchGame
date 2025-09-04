@@ -945,6 +945,7 @@ Transform:
   - {fileID: 300420254}
   - {fileID: 1961752859}
   - {fileID: 153689251}
+  - {fileID: 1948911540}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1052,6 +1053,82 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1948911539
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1948911540}
+  - component: {fileID: 1948911541}
+  - component: {fileID: 1948911542}
+  m_Layer: 0
+  m_Name: BuildConfig
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1948911540
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948911539}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1792754064}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1948911541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948911539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34567890123456789012345678901234, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  configureForMobile: 1
+  configureForDesktop: 0
+  optimizeForRelease: 1
+  enableDebugLogs: 0
+--- !u!114 &1948911542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948911539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23456789012345678901234567890123, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enablePerformanceMonitoring: 1
+  monitoringInterval: 1
+  targetFrameRate: 60
+  adaptiveFrameRate: 1
+  minFrameRate: 30
+  maxFrameRate: 120
+  enableGarbageCollection: 1
+  gcInterval: 60
+  forceGCOnLowMemory: 1
+  lowMemoryThreshold: 0.8
+  enableBatching: 1
+  enableFrustumCulling: 0
+  optimizeForMobile: 1
+  optimizeAudio: 1
+  maxAudioSources: 32
 --- !u!1 &1961752858
 GameObject:
   m_ObjectHideFlags: 0
@@ -1096,7 +1173,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f5e2c3268ccc4988b229cdb914a4779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animalSpritesSo: {fileID: 11400000, guid: 5fee999db52264b98b131cf5f745afb2, type: 2}
   gridObject: {fileID: 15021369}
   matchController: {fileID: 746003721}
   cardPrefab: {fileID: 3804337151392215675, guid: 22c943c7f87bdab449c20dc76b4faf5f, type: 3}
@@ -1146,6 +1222,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardManager: {fileID: 1961752860}
   eventDispatcher: {fileID: 906536191}
+  gameLayoutSOAsset: {fileID: 11400000, guid: ff79ba93ec08e41a39ded7ed279f27d7, type: 2}
+  animalSpritesSo: {fileID: 11400000, guid: 5fee999db52264b98b131cf5f745afb2, type: 2}
   mainMenuUIHandler: {fileID: 216952447}
   gamePlayUIHandler: {fileID: 746003719}
   gameEndUIHandler: {fileID: 459252119}

@@ -9,7 +9,6 @@ namespace CyberSpeed.CardsMatchGame
     {
         [SerializeField] Button playButton;
         [SerializeField] TMP_Dropdown gameLayoutDropDown;
-        [SerializeField] GameLayoutScriptableObject gameLayoutSOAsset;
         [SerializeField] SaveGameConfirmationPopup saveGameConfirmationPopup;
         private int rows, columns;
         
@@ -36,7 +35,8 @@ namespace CyberSpeed.CardsMatchGame
             gameLayoutDropDown.ClearOptions();
 
             List<string> options = new List<string>();
-            foreach (var grid in gameLayoutSOAsset.gridLevels)
+            var gridLevels = GameManager.Instance?.gameLayoutSOAsset.gridLevels;
+            foreach (var grid in gridLevels)
             {
                 options.Add(grid.ToString());
             }

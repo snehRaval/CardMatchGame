@@ -7,7 +7,6 @@ namespace CyberSpeed.CardsMatchGame
 {
     public class CardManager : MonoBehaviour
     {
-        [SerializeField] public AnimalSpritesScriptable animalSpritesSo;
         [SerializeField] private GridLayoutGroup gridObject;
         [SerializeField] private MatchController matchController;
         [SerializeField] private GameObject cardPrefab;
@@ -43,6 +42,20 @@ namespace CyberSpeed.CardsMatchGame
 
             gridObject.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
             gridObject.constraintCount = cols;
+          
+            // apply cell size from SO if configured
+            if (GameManager.Instance?.gameLayoutSOAsset != null)
+            {
+                var gridLevels = GameManager.Instance.gameLayoutSOAsset.gridLevels;
+                foreach (var layout in gridLevels)
+                {
+                    if (layout.rows == rows && layout.cols == cols)
+                    {
+                        gridObject.cellSize = new Vector2(layout.cellSize, layout.cellSize);
+                        break;
+                    }
+                }
+            }
 
             Debug.Log($"CreateCardGrid: totalPairs {totalPairs} | Grid {rows}x{cols}");
 
@@ -80,7 +93,7 @@ namespace CyberSpeed.CardsMatchGame
                     cardObj.SetActive(true);
                     CardUI card = cardObj.GetComponent<CardUI>();
                     int value = cardValues[cardIndex];
-                    card.Initialize(value, animalSpritesSo.GetSprite(value));
+                    card.Initialize(value, GameManager.Instance?.animalSpritesSo.GetSprite(value));
 
                     matchController?.RegisterCard(card);
 
@@ -93,9 +106,10 @@ namespace CyberSpeed.CardsMatchGame
         private List<int> GenerateCardPairs(int totalPairs)
         {
             List<int> pairs = new List<int>();
+            int count = (int) GameManager.Instance?.animalSpritesSo.Count;
             for (int i = 0; i < totalPairs; i++)
             {
-                int index = i % animalSpritesSo.Count;
+                int index = i % count;
                 pairs.Add(index);
                 pairs.Add(index);
             }

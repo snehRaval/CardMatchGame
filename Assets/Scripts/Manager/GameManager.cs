@@ -14,9 +14,13 @@ namespace CyberSpeed.CardsMatchGame
         public CardManager cardManager;
         public ISaveManager saveManager;
         public EventDispatcher eventDispatcher;
+
+        public GameLayoutScriptableObject gameLayoutSOAsset;
+        public AnimalSpritesScriptable animalSpritesSo;
         
         [SerializeField] private UIScreenBase mainMenuUIHandler, gamePlayUIHandler, gameEndUIHandler;
 
+        
         void Awake()
         {
             if (Instance == null)
@@ -123,8 +127,7 @@ namespace CyberSpeed.CardsMatchGame
             var allCards = FindObjectsOfType<CardUI>();
             for (int i = 0; i < allCards.Length; i++)
             {
-                allCards[i].Initialize(data.cardValues[i],
-                    cardManager.animalSpritesSo.GetSprite(data.cardValues[i]));
+                allCards[i].Initialize(data.cardValues[i], animalSpritesSo.GetSprite(data.cardValues[i]));
 
                 if (data.cardMatched[i])
                     allCards[i].SetMatched();

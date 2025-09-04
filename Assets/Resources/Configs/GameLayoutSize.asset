@@ -15,7 +15,13 @@ MonoBehaviour:
   gridLevels:
   - rows: 2
     cols: 2
+    cellSize: 200
   - rows: 3
     cols: 4
+    cellSize: 200
   - rows: 4
     cols: 4
+    cellSize: 200
+  - rows: 6
+    cols: 6
+    cellSize: 120
