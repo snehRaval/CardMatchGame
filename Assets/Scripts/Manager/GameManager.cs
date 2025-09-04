@@ -20,6 +20,8 @@ namespace CyberSpeed.CardsMatchGame
 
         [SerializeField] private UIScreenBase mainMenuUIHandler, gamePlayUIHandler, gameEndUIHandler;
         public CardManager cardManager;
+
+        public ISaveManager saveManager;
         void Awake()
         {
             if (Instance == null)
@@ -36,6 +38,7 @@ namespace CyberSpeed.CardsMatchGame
         private void Start()
         {
             InitialiseGame();
+            saveManager = new SaveLoadManager();
         }
         
         public void InitialiseGame()
@@ -70,7 +73,7 @@ namespace CyberSpeed.CardsMatchGame
             gamePlayUIHandler.gameObject.SetActive(false);
             gameEndUIHandler.gameObject.SetActive(true);
             string key = $"{rows}x{cols}";
-            SaveLoadManager.Delete(key);
+            saveManager.Delete(key);
             OnGameOver?.Invoke(ScoreManager.Instance);
         }
 
@@ -112,7 +115,7 @@ namespace CyberSpeed.CardsMatchGame
                 data.cardFaceDown.Add(card.IsFaceDown);
             }
 
-            SaveLoadManager.Save(key, data);
+            saveManager.Save(key, data);
             OnGameSave?.Invoke();
         }
         
@@ -120,7 +123,7 @@ namespace CyberSpeed.CardsMatchGame
         public void LoadGame(string key)
         {
             
-            SaveData data = SaveLoadManager.Load(key);
+            SaveData data = saveManager.Load(key);
             if (data == null)
             {
                 Debug.LogWarning($"No save found for {key}");

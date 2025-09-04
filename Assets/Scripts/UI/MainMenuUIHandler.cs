@@ -68,7 +68,7 @@ namespace CyberSpeed.CardsMatchGame
         private void OnPlayButtonClick()
         {   
             string key = $"{rows}x{columns}";
-            if (SaveLoadManager.HasSave(key))
+            if (GameManager.Instance.saveManager.HasSave(key))
             {
                 saveGameConfirmationPopup.Init(rows, columns);
             }
@@ -76,7 +76,6 @@ namespace CyberSpeed.CardsMatchGame
             {
                 GameManager.Instance.StartGame(rows, columns);
             }
-            
         }
     }
 }

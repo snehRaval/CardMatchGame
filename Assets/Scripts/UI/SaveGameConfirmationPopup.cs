@@ -46,7 +46,7 @@ namespace CyberSpeed.CardsMatchGame
         private void LoadNewGame()
         {
             Show(false);
-            SaveLoadManager.Delete(key); // wipe old save if starting new
+            GameManager.Instance.saveManager.Delete(key); // wipe old save if starting new
             GameManager.Instance.StartGame(row, column);
         }
 
