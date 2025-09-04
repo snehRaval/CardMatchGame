@@ -4,24 +4,19 @@ using UnityEngine;
 
 namespace CyberSpeed.CardsMatchGame
 {
-    public class GameManager : MonoBehaviour, IGameEvents
+    [DefaultExecutionOrder(-100)] 
+    public class GameManager : MonoBehaviour
     {
         [field: Header("Game Settings")]
         public int rows { get; private set; }
         public int cols { get; private set; }
         public static GameManager Instance { get; private set; }
-       
-        public event Action<int, int> OnGameStarted;   // rows, cols
-        public event Action<IScoreData> OnGameOver;
-        public event Action OnGamePaused;
-        public event Action OnGameResumed;
-        public event Action OnGameSave;
-        
-
-        [SerializeField] private UIScreenBase mainMenuUIHandler, gamePlayUIHandler, gameEndUIHandler;
         public CardManager cardManager;
-
         public ISaveManager saveManager;
+        public EventDispatcher eventDispatcher;
+        
+        [SerializeField] private UIScreenBase mainMenuUIHandler, gamePlayUIHandler, gameEndUIHandler;
+
         void Awake()
         {
             if (Instance == null)
@@ -56,9 +51,7 @@ namespace CyberSpeed.CardsMatchGame
             cols = colCount;
             mainMenuUIHandler.gameObject.SetActive(false);
             gamePlayUIHandler.gameObject.SetActive(true);
-            ScoreManager.Instance.ResetAll();
-            OnGameStarted?.Invoke(rows, cols);
-            
+            eventDispatcher?.Dispatch(GameEvents.GAME_STARTED, new GameStartedPayload { rows = rows, cols = cols });
         }
         
         public void ReStartGame()
@@ -74,19 +67,8 @@ namespace CyberSpeed.CardsMatchGame
             gameEndUIHandler.gameObject.SetActive(true);
             string key = $"{rows}x{cols}";
             saveManager.Delete(key);
-            OnGameOver?.Invoke(ScoreManager.Instance);
-        }
-
-        public void PauseGame()
-        {
-            Debug.Log("Game Paused!");
-            OnGamePaused?.Invoke();
-        }
-
-        public void ResumeGame()
-        {
-            Debug.Log("Game Resumed!");
-            OnGameResumed?.Invoke();
+            AudioManager.Instance.PlayGameOver();
+            eventDispatcher?.Dispatch(GameEvents.GAME_OVER, ScoreManager.Instance );
         }
 
         public void GameSave()
@@ -114,15 +96,13 @@ namespace CyberSpeed.CardsMatchGame
                 data.cardMatched.Add(card.IsMatched);
                 data.cardFaceDown.Add(card.IsFaceDown);
             }
-
+            
             saveManager.Save(key, data);
-            OnGameSave?.Invoke();
+            eventDispatcher?.Dispatch(GameEvents.GAME_SAVED, new GameSavedPayload { key = key });
         }
-        
         
         public void LoadGame(string key)
         {
-            
             SaveData data = saveManager.Load(key);
             if (data == null)
             {
@@ -154,9 +134,7 @@ namespace CyberSpeed.CardsMatchGame
                     allCards[i].ShowCardBack();
             }
 
-            ScoreManager.Instance.RestoreState(
-                data.turns, data.matches, data.combo, data.score
-            );
+            ScoreManager.Instance.RestoreState(data.turns, data.matches, data.combo, data.score);
             
             //NEW: Sync MatchController with restored cards
             var matchController = FindObjectOfType<MatchController>();

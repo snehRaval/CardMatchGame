@@ -52,8 +52,7 @@ namespace CyberSpeed.CardsMatchGame
         {
             ( rows,  columns) = GetRowColumns(gameLayoutDropDown.options[gameLayoutDropDown.value].text);
             Debug.Log($"OnDropdownValueChange: rows {rows} columns {columns} for value {value}");
-            
-           
+            AudioManager.Instance.PlayButtonClick();
         }
 
         private (int, int) GetRowColumns(string input)
@@ -68,6 +67,7 @@ namespace CyberSpeed.CardsMatchGame
         private void OnPlayButtonClick()
         {   
             string key = $"{rows}x{columns}";
+            AudioManager.Instance.PlayButtonClick();
             if (GameManager.Instance.saveManager.HasSave(key))
             {
                 saveGameConfirmationPopup.Init(rows, columns);

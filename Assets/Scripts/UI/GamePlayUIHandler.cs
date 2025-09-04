@@ -14,31 +14,23 @@ namespace CyberSpeed.CardsMatchGame
         [SerializeField] ExitPopupUI gameEndPopup;
         private void OnEnable()
         {
-            GameManager.Instance.OnGameStarted += SpawnGrid;
-            if (ScoreManager.Instance != null)
-            {
-                ScoreManager.Instance.OnScoreUpdate += OnScoreUpdate;
-            }
+            GameManager.Instance.eventDispatcher.Subscribe<GameStartedPayload>(GameEvents.GAME_STARTED,SpawnGrid);
+            GameManager.Instance.eventDispatcher.Subscribe<IScoreData>(GameEvents.GAME_SCORE_UPDATE,OnScoreUpdate);
             
-            homeButton.onClick.AddListener(OnHomeClick);
+            homeButton.onClick.AddListener(OnHomeButtonClick);
             gameEndPopup.Show(false);
         }
         
         private void OnDisable()
         {
-            GameManager.Instance.OnGameStarted -= SpawnGrid;
-            if (ScoreManager.Instance != null)
-            {
-                ScoreManager.Instance.OnScoreUpdate -= OnScoreUpdate;
-            }
-            
-            homeButton.onClick.RemoveListener(OnHomeClick);
+            GameManager.Instance.eventDispatcher.UnsubscribeAll(this);
+            homeButton.onClick.RemoveListener(OnHomeButtonClick);
         }
         
-        private void SpawnGrid(int rows, int cols)
+        private void SpawnGrid(GameStartedPayload payloadData)
         {
-            Debug.Log($"Spawning {rows}x{cols} board...");
-            cardManager.CreateCardGrid(rows, cols);
+            Debug.Log($"Spawning {payloadData.rows}x{payloadData.cols} board...");
+            cardManager.CreateCardGrid(payloadData.rows, payloadData.cols);
 
             turnText.text = "Turn: 0";
             matchesText.text = "Matches: 0";
@@ -54,8 +46,9 @@ namespace CyberSpeed.CardsMatchGame
             comboText.text = $"Combo: {scoreData.Combo}";
         }
 
-        private void OnHomeClick()
+        private void OnHomeButtonClick()
         {
+            AudioManager.Instance.PlayButtonClick();
             gameEndPopup.Show(true);
         }
     }

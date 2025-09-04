@@ -7,7 +7,7 @@ public class SaveLoadManager : ISaveManager
     private readonly ISerializer serializer;
     private SaveWrapper cache;
 
-    public SaveLoadManager(ISerializer serializer = null, string fileName = "all_saves.json")
+    public SaveLoadManager(ISerializer serializer = null, string fileName = "SavesGame.json")
     {
         this.serializer = serializer ?? new UnityJsonSerializer();
         savePath = Path.Combine(Application.persistentDataPath, fileName);

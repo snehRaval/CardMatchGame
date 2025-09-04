@@ -41,6 +41,7 @@ namespace CyberSpeed.CardsMatchGame
         {
             Show(false);
             GameManager.Instance.LoadGame(key);
+            AudioManager.Instance.PlayButtonClick();
         }
 
         private void LoadNewGame()
@@ -48,6 +49,7 @@ namespace CyberSpeed.CardsMatchGame
             Show(false);
             GameManager.Instance.saveManager.Delete(key); // wipe old save if starting new
             GameManager.Instance.StartGame(row, column);
+            AudioManager.Instance.PlayButtonClick();
         }
 
     }

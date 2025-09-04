@@ -14,14 +14,14 @@ namespace CyberSpeed.CardsMatchGame
        
         public void OnEnable()
         {
-            GameManager.Instance.OnGameOver += OnGameoverUIUpdate;
+            GameManager.Instance.eventDispatcher.Subscribe<IScoreData>(GameEvents.GAME_OVER,OnGameoverUIUpdate);
             rePlayButton.onClick.AddListener(OnReplayClick);
             homeButton.onClick.AddListener(OnHomeClick);
         }
 
         public void OnDisable()
         {
-            GameManager.Instance.OnGameOver -= OnGameoverUIUpdate;
+            GameManager.Instance.eventDispatcher.UnsubscribeAll(this);
             rePlayButton.onClick.RemoveListener(OnReplayClick);
             homeButton.onClick.RemoveListener(OnHomeClick);
         }
@@ -51,7 +51,8 @@ namespace CyberSpeed.CardsMatchGame
         {
             if (GameManager.Instance.cardManager != null)
                 GameManager.Instance.cardManager.ReleaseAllCards();
-            
+           
+            AudioManager.Instance.PlayButtonClick();
             GameManager.Instance.InitialiseGame();
             Show(false);
         } 
@@ -60,7 +61,8 @@ namespace CyberSpeed.CardsMatchGame
         {
             if (GameManager.Instance.cardManager  != null)
                 GameManager.Instance.cardManager.ReleaseAllCards();
-            
+
+            AudioManager.Instance.PlayButtonClick();
             GameManager.Instance.ReStartGame();
             
             Show(false);

@@ -71,31 +71,20 @@ namespace CyberSpeed.CardsMatchGame
                 return;
 
             // A turn is counted once two cards are selected
-            if (ScoreManager.Instance != null)
-            {
-                ScoreManager.Instance.IncrementTurn();
-            }
-
             if (firstSelection.CardValue == secondSelection.CardValue)
             {
                 // match
                 firstSelection.SetMatched();
                 secondSelection.SetMatched();
                 matchedPairs++;
-                if (ScoreManager.Instance != null)
-                {
-                    ScoreManager.Instance.OnMatch();
-                }
+                GameManager.Instance.eventDispatcher.Dispatch(GameEvents.GAME_CARD_MATCH);
                 ClearSelection();
                 CheckForGameOver();
             }
             else
             {
                 // mismatch
-                if (ScoreManager.Instance != null)
-                {
-                    ScoreManager.Instance.OnMismatch();
-                }
+                GameManager.Instance.eventDispatcher.Dispatch(GameEvents.GAME_CARD_MISSMATCH);
                 inputLocked = true;
                 StartCoroutine(HideMismatchedAfterDelay());
             }

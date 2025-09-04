@@ -4,28 +4,45 @@ using UnityEngine;
 namespace CyberSpeed.CardsMatchGame
 {
     public class ScoreManager :  MonoBehaviour, IScoreData
-    {
+    { 
         public static ScoreManager Instance { get; private set; }
-
         private int baseScorePerMatch = 1;
-
         public int Turns { get; private set; }
         public int Matches { get; private set; }
         public int Combo { get; private set; }
         public int Score { get; private set; }
-        public event Action<IScoreData> OnScoreUpdate; //combo
         private void Awake()
         {
-            if (Instance != null && Instance != this)
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
             {
                 Destroy(gameObject);
-                return;
             }
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            
             ResetAll();
         }
+
+        private void OnEnable()
+        {
+            GameManager.Instance.eventDispatcher.Subscribe<GameStartedPayload>(GameEvents.GAME_STARTED,OnGameStarted);
+            GameManager.Instance.eventDispatcher.Subscribe(GameEvents.GAME_CARD_MATCH,OnMatch);
+            GameManager.Instance.eventDispatcher.Subscribe(GameEvents.GAME_CARD_MISSMATCH,OnMismatch);
+        }
         
+        private void OnDisable()
+        {
+            GameManager.Instance.eventDispatcher.UnsubscribeAll(this);
+        }
+        
+        private void OnGameStarted(GameStartedPayload obj)
+        {
+            ResetAll();
+        }
+
         public void ResetAll()
         {
             Turns = 0;
@@ -33,33 +50,30 @@ namespace CyberSpeed.CardsMatchGame
             Combo = 0;
             Score = 0;
             Matches = 0;
-            baseScorePerMatch = 0;
+            baseScorePerMatch = 1;
         }
-
-        public void IncrementTurn()
+        
+        private void OnMatch()
         {
             Turns++;
-            OnScoreUpdate?.Invoke(this);
-        }
-
-        public void OnMatch()
-        {
             Matches++;
-            baseScorePerMatch++;
             // increase combo each successful continuous match
             Combo = Mathf.Max(0, Combo + 1);
-            Score += baseScorePerMatch * Combo;
-            OnScoreUpdate?.Invoke(this);
+            // +1 per match, multiply by combo only when combo > 1
+            int increment = Combo > 1 ? (1 * Combo) : 1;
+            Score += increment;
             AudioManager.Instance.PlayMatchFound();
+            GameManager.Instance?.eventDispatcher.Dispatch(GameEvents.GAME_SCORE_UPDATE, this);
         }
 
-        public void OnMismatch()
+        private void OnMismatch()
         {
             // break streak; set combo back to 1
+            Turns++;
             Combo = 0;
             baseScorePerMatch = 1;
-            OnScoreUpdate?.Invoke(this);
             AudioManager.Instance.PlayMismatch();
+            GameManager.Instance?.eventDispatcher.Dispatch(GameEvents.GAME_SCORE_UPDATE, this);
         }
         
         public void RestoreState(int turns, int matches, int combo, int score)
@@ -68,7 +82,7 @@ namespace CyberSpeed.CardsMatchGame
             Matches = matches;
             Combo = combo;
             Score = score;
-            OnScoreUpdate?.Invoke(this);
+            GameManager.Instance?.eventDispatcher.Dispatch(GameEvents.GAME_SCORE_UPDATE, this);
         }
     }
 }

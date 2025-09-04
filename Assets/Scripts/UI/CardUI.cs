@@ -78,8 +78,8 @@ namespace CyberSpeed.CardsMatchGame
             // Ignore if already matched or already face-up
             if (IsMatched || IsFaceDown == false || IsAnimating)
                 return;
-            Clicked?.Invoke(this);
             AudioManager.Instance.PlayCardFlip();
+            Clicked?.Invoke(this);
         }
 
         public void ShowCardBack()

@@ -23,13 +23,15 @@ namespace CyberSpeed.CardsMatchGame
         private void Awake()
         {
             // Singleton pattern
-            if (Instance != null && Instance != this)
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
             {
                 Destroy(gameObject);
-                return;
             }
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
 
             // Auto start background music
             if (backgroundMusic != null)
@@ -86,6 +88,7 @@ namespace CyberSpeed.CardsMatchGame
         #region Internal
         private void PlaySFX(AudioClip clip)
         {
+           
             if (clip != null)
                 sfxSource.PlayOneShot(clip);
         }

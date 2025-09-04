@@ -27,20 +27,24 @@ namespace CyberSpeed.CardsMatchGame
 
         private void OnHomeClick()
         {
+            AudioManager.Instance.PlayButtonClick();
+
             if (GameManager.Instance.cardManager  != null)
-                GameManager.Instance.cardManager .ReleaseAllCards();
+                GameManager.Instance.cardManager.ReleaseAllCards();
             
             GameManager.Instance.InitialiseGame();
         }
 
         private void OnSaveAndHomeClick()
         {
+            AudioManager.Instance.PlayButtonClick();
             GameManager.Instance.GameSave();
             OnHomeClick();
         }
 
         private void OnCancelClick()
         {
+            AudioManager.Instance.PlayButtonClick();
             Show(false);
         }
     }
