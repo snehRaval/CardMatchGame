@@ -1124,7 +1124,7 @@ MonoBehaviour:
   gcInterval: 60
   forceGCOnLowMemory: 1
   lowMemoryThreshold: 0.8
-  enableBatching: 1
+  enableBatching: 0
   enableFrustumCulling: 0
   optimizeForMobile: 1
   optimizeAudio: 1
