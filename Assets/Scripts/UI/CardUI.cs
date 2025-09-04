@@ -70,7 +70,6 @@ namespace CyberSpeed.CardsMatchGame
             IsMatched = false;
             imgFrontCard.enabled = false;
             imgBackCard.enabled = true;
-            //return to pool 
         }
 
         public void OnClicked()
@@ -100,7 +99,7 @@ namespace CyberSpeed.CardsMatchGame
         {
             IsMatched = true;
             Color color = imgFrontCard.color;
-            color.a = 0.7f;
+            color.a = 0f;
             imgFrontCard.color = color;
         }
 
@@ -164,6 +163,7 @@ namespace CyberSpeed.CardsMatchGame
                 SetLocalXScale(Mathf.Lerp(1f, 0f, eased));
                 yield return null;
             }
+            
             SetLocalXScale(0f);
 
             // swap faces at mid flip

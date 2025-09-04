@@ -30,6 +30,7 @@ namespace CyberSpeed.CardsMatchGame
         private void SpawnGrid(GameStartedPayload payloadData)
         {
             Debug.Log($"Spawning {payloadData.rows}x{payloadData.cols} board...");
+            
             cardManager.CreateCardGrid(payloadData.rows, payloadData.cols);
 
             turnText.text = "Turn: 0";

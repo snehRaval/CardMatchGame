@@ -183,11 +183,15 @@ MonoBehaviour:
   musicSource: {fileID: 1607453487}
   sfxSource: {fileID: 1758306864}
   backgroundMusic: {fileID: 8300000, guid: 2e4c79649792f410f9fa20a4887f9964, type: 3}
-  cardFlipClip: {fileID: 8300000, guid: 28402f9e165b248a6b1b960422ce8147, type: 3}
-  matchFoundClip: {fileID: 8300000, guid: 144d311a4dccd4d86aee570fa7dd2449, type: 3}
-  mismatchClip: {fileID: 8300000, guid: 58add7d53dd0e4e6caad7d07faa1ca32, type: 3}
-  gameOverClip: {fileID: 8300000, guid: 9661f6b8293724e14acffc1f283c1046, type: 3}
-  buttonClickClip: {fileID: 8300000, guid: f2cc2c20197ca4658ad48348d3c34852, type: 3}
+  musicVolume: 0.5
+  cardFlipSound: {fileID: 8300000, guid: 28402f9e165b248a6b1b960422ce8147, type: 3}
+  cardMatchSound: {fileID: 8300000, guid: 144d311a4dccd4d86aee570fa7dd2449, type: 3}
+  cardMismatchSound: {fileID: 8300000, guid: 58add7d53dd0e4e6caad7d07faa1ca32, type: 3}
+  gameOverSound: {fileID: 8300000, guid: 9661f6b8293724e14acffc1f283c1046, type: 3}
+  buttonClickSound: {fileID: 8300000, guid: f2cc2c20197ca4658ad48348d3c34852, type: 3}
+  sfxVolume: 0.7
+  musicEnabled: 1
+  sfxEnabled: 1
 --- !u!1 &205752436
 GameObject:
   m_ObjectHideFlags: 0
@@ -1156,9 +1160,29 @@ PrefabInstance:
       propertyPath: cardManager
       value: 
       objectReference: {fileID: 1961752860}
+    - target: {fileID: 2918687683793725033, guid: 2e361329d681a4bcf91718d136f0b9ea, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2918687683793725033, guid: 2e361329d681a4bcf91718d136f0b9ea, type: 3}
+      propertyPath: m_Color.b
+      value: 0.29076186
+      objectReference: {fileID: 0}
+    - target: {fileID: 2918687683793725033, guid: 2e361329d681a4bcf91718d136f0b9ea, type: 3}
+      propertyPath: m_Color.g
+      value: 0.29076186
+      objectReference: {fileID: 0}
+    - target: {fileID: 2918687683793725033, guid: 2e361329d681a4bcf91718d136f0b9ea, type: 3}
+      propertyPath: m_Color.r
+      value: 0.509434
+      objectReference: {fileID: 0}
     - target: {fileID: 2918687684254174814, guid: 2e361329d681a4bcf91718d136f0b9ea, type: 3}
       propertyPath: m_Name
       value: Canvas_Gameplay
+      objectReference: {fileID: 0}
+    - target: {fileID: 2918687684254174814, guid: 2e361329d681a4bcf91718d136f0b9ea, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2918687684254174815, guid: 2e361329d681a4bcf91718d136f0b9ea, type: 3}
       propertyPath: m_Pivot.x
@@ -1258,6 +1282,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1812236895}
     m_Modifications:
+    - target: {fileID: 426522895, guid: 3e47e403f0bc044c1b00e56e04cb91a0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 987833233, guid: 3e47e403f0bc044c1b00e56e04cb91a0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8094086541950811407, guid: 3e47e403f0bc044c1b00e56e04cb91a0, type: 3}
       propertyPath: m_Color.a
       value: 1
@@ -1274,9 +1306,17 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8094086541950811407, guid: 3e47e403f0bc044c1b00e56e04cb91a0, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8094086542395961378, guid: 3e47e403f0bc044c1b00e56e04cb91a0, type: 3}
       propertyPath: m_Name
       value: Canvas_MainMenuUIHandler
+      objectReference: {fileID: 0}
+    - target: {fileID: 8094086542395961378, guid: 3e47e403f0bc044c1b00e56e04cb91a0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8094086542395961379, guid: 3e47e403f0bc044c1b00e56e04cb91a0, type: 3}
       propertyPath: m_Pivot.x

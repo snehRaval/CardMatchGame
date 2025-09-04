@@ -32,67 +32,81 @@ namespace CyberSpeed.CardsMatchGame
         //  private CardUI[,] cardGrid;
         public void CreateCardGrid(int rows, int cols)
         {
-            totalPairs = (rows * cols) / 2;
-            //    cardGrid = new CardUI[rows, cols];
-            gridObject.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-            gridObject.constraintCount = cols;
-
-            Debug.Log($"CreateCardGrid: totalPairs {totalPairs} {rows} {cols}");
-            // Create card pairs
-            List<int> cardValues = new List<int>();
-            for (int i = 0; i < totalPairs; i++)
+            int totalCards = rows * cols;
+            if (totalCards % 2 != 0)
             {
-                cardValues.Add(i);
-                cardValues.Add(i);
-            }
-
-            // Shuffle card values
-            for (int i = 0; i < cardValues.Count; i++)
-            {
-                int temp = cardValues[i];
-                int randomIndex = Random.Range(i, cardValues.Count);
-                cardValues[i] = cardValues[randomIndex];
-                cardValues[randomIndex] = temp;
-            }
-
-            // Validate sprite capacity
-            if (totalPairs > animalSpritesSo.Count)
-            {
-                Debug.LogError($"Not enough sprites. Needed pairs: {totalPairs}, available unique sprites: {animalSpritesSo.Count}");
+                Debug.LogError($"Grid must have even number of cells. Received {rows}x{cols} = {totalCards}.");
                 return;
             }
 
-            // Create cards
-            int cardIndex = 0;
-            for (int y = 0; y < cols; y++)
+            totalPairs = totalCards / 2;
+
+            gridObject.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+            gridObject.constraintCount = cols;
+
+            Debug.Log($"CreateCardGrid: totalPairs {totalPairs} | Grid {rows}x{cols}");
+
+            // Generate and shuffle card values
+            List<int> cardValues = GenerateCardPairs(totalPairs);
+            Shuffle(cardValues);
+            
+            // Clear previous cards if needed
+            foreach (Transform child in gridObject.transform)
             {
-                for (int x = 0; x < rows; x++)
+                child.gameObject.SetActive(false);
+            }
+            
+            if (CardInstantiate(rows, cols, cardValues)) return;
+
+            matchController?.Initialise(totalPairs);
+            matchController?.RunInitialReveal();
+        }
+
+        private bool CardInstantiate(int rows, int cols, List<int> cardValues)
+        {
+            // Instantiate cards
+            int cardIndex = 0;
+            for (int row = 0; row < rows; row++)
+            {
+                for (int col = 0; col < cols; col++)
                 {
                     GameObject cardObj = objectPool.GetObjectFromPool();
                     if (cardObj == null)
                     {
                         Debug.LogError("Failed to get card object from pool. Pool may not be initialized properly.");
-                        return;
+                        return true;
                     }
-                    
+
                     cardObj.SetActive(true);
                     CardUI card = cardObj.GetComponent<CardUI>();
-                    //Debug.Log($"CreateCardGrid: Initialize cardValues {cardValues[cardIndex]} cardIndex : {cardIndex}");
-                    card.Initialize(cardValues[cardIndex], animalSpritesSo.GetSprite(cardValues[cardIndex]));
-                    //       cardGrid[x, y] = card;
-                    if (matchController != null)
-                    {
-                        matchController.RegisterCard(card);
-                    }
+                    int value = cardValues[cardIndex];
+                    card.Initialize(value, animalSpritesSo.GetSprite(value));
+
+                    matchController?.RegisterCard(card);
 
                     cardIndex++;
                 }
             }
 
-            if (matchController != null)
+            return false;
+        }
+        private List<int> GenerateCardPairs(int totalPairs)
+        {
+            List<int> pairs = new List<int>();
+            for (int i = 0; i < totalPairs; i++)
             {
-                matchController.Initialise(totalPairs);
-                matchController.RunInitialReveal();
+                int index = i % animalSpritesSo.Count;
+                pairs.Add(index);
+                pairs.Add(index);
+            }
+            return pairs;
+        }
+        private void Shuffle(List<int> list)
+        {
+            for (int i = list.Count - 1; i > 0; i--)
+            {
+                int j = Random.Range(0, i + 1);
+                (list[i], list[j]) = (list[j], list[i]); // tuple swap
             }
         }
     }
