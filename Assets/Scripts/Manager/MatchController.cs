@@ -115,7 +115,8 @@ namespace CyberSpeed.CardsMatchGame
         {
             if (matchedPairs >= totalPairs)
             {
-                await UtilsAsync.Delay(500, () => {
+                await UtilsAsync.Delay(500, () =>
+                {
                     GameManager.Instance.GameOver();
                 });
                

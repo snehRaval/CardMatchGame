@@ -139,7 +139,7 @@ namespace CyberSpeed.CardsMatchGame
 
             ScoreManager.Instance.RestoreState(data.turns, data.matches, data.combo, data.score);
             
-            //NEW: Sync MatchController with restored cards
+            //MatchController with restored cards
             var matchController = FindObjectOfType<MatchController>();
             int matchedCount = 0;
             foreach (var card in allCards)
@@ -147,7 +147,7 @@ namespace CyberSpeed.CardsMatchGame
                 if (card.IsMatched) matchedCount++;
             }
             matchController.Initialise((rows * cols) / 2);
-            matchController.SetMatchedPairs(matchedCount / 2); // each pair has 2 cards
+            matchController.SetMatchedPairs(matchedCount / 2);
             
         }
     }

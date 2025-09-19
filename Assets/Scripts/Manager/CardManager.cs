@@ -27,8 +27,7 @@ namespace CyberSpeed.CardsMatchGame
                 objectPool.ReleaseAll();
             }
         }
-
-        //  private CardUI[,] cardGrid;
+        
         public void CreateCardGrid(int rows, int cols)
         {
             int totalCards = rows * cols;
@@ -74,7 +73,27 @@ namespace CyberSpeed.CardsMatchGame
             matchController?.Initialise(totalPairs);
             matchController?.RunInitialReveal();
         }
-
+        private List<int> GenerateCardPairs(int totalPairs)
+        {
+            List<int> pairs = new List<int>();
+            int count = (int) GameManager.Instance?.animalSpritesSo.Count;
+            for (int i = 0; i < totalPairs; i++)
+            {
+                int index = i % count; // to repeat the card in case of count < totalPairs
+                pairs.Add(index);
+                pairs.Add(index);
+            }
+            return pairs;
+        }
+        private void Shuffle(List<int> list)
+        {
+            // tuple swap
+            for (int i = list.Count - 1; i > 0; i--)
+            {
+                int j = Random.Range(0, i + 1);
+                (list[i], list[j]) = (list[j], list[i]); 
+            }
+        }
         private bool CardInstantiate(int rows, int cols, List<int> cardValues)
         {
             // Instantiate cards
@@ -103,25 +122,6 @@ namespace CyberSpeed.CardsMatchGame
 
             return false;
         }
-        private List<int> GenerateCardPairs(int totalPairs)
-        {
-            List<int> pairs = new List<int>();
-            int count = (int) GameManager.Instance?.animalSpritesSo.Count;
-            for (int i = 0; i < totalPairs; i++)
-            {
-                int index = i % count;
-                pairs.Add(index);
-                pairs.Add(index);
-            }
-            return pairs;
-        }
-        private void Shuffle(List<int> list)
-        {
-            for (int i = list.Count - 1; i > 0; i--)
-            {
-                int j = Random.Range(0, i + 1);
-                (list[i], list[j]) = (list[j], list[i]); // tuple swap
-            }
-        }
+       
     }
 }
